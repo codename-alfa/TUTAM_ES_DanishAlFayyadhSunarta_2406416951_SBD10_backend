@@ -8,7 +8,15 @@ require('dotenv').config();
 const app = express();
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_kunci_lokal_saja';
 
-app.use(cors());
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+app.options('*', cors());
+
+app.use(express.json());
 app.use(express.json());
 
 const authenticateToken = (req, res, next) => {
